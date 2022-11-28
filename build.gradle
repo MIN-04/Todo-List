@@ -23,6 +23,8 @@ dependencies {
     // 인텔리제이에서
     // 1. 롬복 플러그인 설치 (인텔리제이 최신 버전은 자동으로 설치되어 있다.
     // 2. Setting > Build, Exc... > Compiler > Annotation Processors > Enable annotation processing 체크
+
+    testImplementation('org.springframework.boot:spring-boot-starter-test')
 }
 
 test {
