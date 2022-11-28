@@ -1,13 +1,11 @@
 package org.example.service;
 
-import org.example.model.TodoEntity;
+import org.example.model.TodoModel;
 import org.example.model.TodoRequest;
-import org.example.repository.TodoRepository;
-import org.junit.jupiter.api.Assertions;
+import org.example.service.repository.TodoRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.AdditionalAnswers;
-import org.mockito.BDDMockito;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -33,32 +31,32 @@ class TodoServiceTest {
 
   @Test
   void add() {
-    when(this.todoRepository.save(any(TodoEntity.class)))
+    when(this.todoRepository.save(any(TodoModel.class)))
         .then(AdditionalAnswers.returnsFirstArg());
 
     TodoRequest expected = new TodoRequest();
     expected.setTitle("Test Title");
 
-    TodoEntity actual = this.todoService.add(expected);
+    TodoModel actual = this.todoService.add(expected);
 
     assertEquals(expected.getTitle(), actual.getTitle());
   }
 
   @Test
   void searchById() {
-    TodoEntity entity = new TodoEntity();
+    TodoModel entity = new TodoModel();
     entity.setId(123L);
     entity.setTitle("TITLE");
     entity.setOrder(0L);
     entity.setCompleted(false);
-    Optional<TodoEntity> optional = Optional.of(entity); // findById는 Optional을 반환
+    Optional<TodoModel> optional = Optional.of(entity); // findById는 Optional을 반환
 
     given(this.todoRepository.findById(anyLong()))
         .willReturn(optional);
 
-    TodoEntity actual = this.todoService.searchById(123L);
+    TodoModel actual = this.todoService.searchById(123L);
 
-    TodoEntity expected = optional.get();
+    TodoModel expected = optional.get();
 
     assertEquals(expected.getId(), actual.getId());
     assertEquals(expected.getTitle(), actual.getTitle());
